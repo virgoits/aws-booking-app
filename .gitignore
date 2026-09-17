@@ -1,0 +1,18 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+terraform.tfvars
+.terraform.lock.hcl
+
+# Python
+app/venv/
+__pycache__/
+*.pyc
+
+# Local files with secrets - never commit
+db-local.py
+
+# Editor/OS junk
+.vscode/
+.DS_Store
