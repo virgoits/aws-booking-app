@@ -13,8 +13,8 @@ resource "aws_lb" "app" {
 
 # --- Target Group: the pool of EC2 instances the ALB sends traffic to ---
 resource "aws_lb_target_group" "app" {
-  name     = "booking-app-tg"
-  port     = 80
+  name     = "booking-app-tg-v2"
+  port     = 5000
   protocol = "HTTP"
   vpc_id   = aws_vpc.main.id
 
@@ -24,6 +24,10 @@ resource "aws_lb_target_group" "app" {
     unhealthy_threshold = 2
     interval            = 15
     timeout             = 5
+  }
+
+  lifecycle {
+    create_before_destroy = true
   }
 
   tags = {

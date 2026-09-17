@@ -17,13 +17,27 @@ resource "aws_launch_template" "app" {
 
   vpc_security_group_ids = [aws_security_group.ec2.id]
 
+    iam_instance_profile {
+    name = aws_iam_instance_profile.ec2_ssm.name
+  }
+
   # Basic startup script: installs a web server and shows a placeholder page
-  user_data = base64encode(<<-EOF
+    user_data = base64encode(<<-EOF
     #!/bin/bash
-    dnf install -y httpd
-    systemctl start httpd
-    systemctl enable httpd
-    echo "<h1>Booking App - Server: $(hostname)</h1>" > /var/www/html/index.html
+    dnf install -y python3.11 python3.11-pip git
+
+    cd /home/ec2-user
+    git clone https://github.com/virgoits/aws-booking-app.git
+    cd aws-booking-app/app
+
+    python3.11 -m pip install flask pymysql
+
+    export DB_HOST="${aws_db_instance.main.address}"
+    export DB_USER="admin"
+    export DB_PASSWORD="${var.db_password}"
+    export DB_NAME="bookingapp"
+
+    python3.11 app.py > /var/log/booking-app.log 2>&1 &
   EOF
   )
 
@@ -49,6 +63,15 @@ resource "aws_autoscaling_group" "app" {
   }
 
   target_group_arns = [aws_lb_target_group.app.arn]
+
+  # --- NEW: automatically refresh instances when the launch template changes ---
+  instance_refresh {
+    strategy = "Rolling"
+    preferences {
+      min_healthy_percentage = 50
+      instance_warmup        = 60
+    }
+  }
 
   tag {
     key                 = "Name"
