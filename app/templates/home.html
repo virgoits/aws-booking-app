@@ -22,19 +22,24 @@
                 <div>
                     <h3 class="text-lg font-semibold text-slate-900">{{ c.name }}</h3>
                     <p class="text-slate-500 text-sm mt-1">with {{ c.instructor }}</p>
-                    <p class="text-slate-400 text-sm">{{ c.class_time }}</p>
+                   <p class="text-slate-400 text-sm">{{ c.class_time }}</p>
+<p class="text-slate-500 text-xs mt-1">{{ c.booked_count }} / {{ c.capacity }} booked</p>
                 </div>
 
-                <form action="/book/{{ c.id }}" method="POST" class="flex flex-col gap-2 w-56">
-                    <input type="text" name="name" placeholder="Your name" required
-                        class="border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-800">
-                    <input type="email" name="email" placeholder="Your email" required
-                        class="border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-800">
-                    <button type="submit"
-                        class="bg-slate-900 text-white rounded-lg px-4 py-2 text-sm font-medium hover:bg-slate-700 transition">
-                        Book Class
-                    </button>
-                </form>
+               {% if c.booked_count < c.capacity %}
+<form action="/book/{{ c.id }}" method="POST" class="flex flex-col gap-2 w-56">
+    <input type="text" name="name" placeholder="Your name" required
+        class="border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-800">
+    <input type="email" name="email" placeholder="Your email" required
+        class="border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-800">
+    <button type="submit"
+        class="bg-slate-900 text-white rounded-lg px-4 py-2 text-sm font-medium hover:bg-slate-700 transition">
+        Book Class
+    </button>
+</form>
+{% else %}
+<span class="text-sm text-red-500 font-medium w-56 text-center">Class Full</span>
+{% endif %}
             </div>
             {% endfor %}
         </div>

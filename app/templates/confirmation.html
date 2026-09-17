@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmed - FitBook</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center">
+    <div class="bg-white rounded-xl shadow-md border border-slate-200 p-10 max-w-md w-full text-center">
+        <div class="text-5xl mb-4">✅</div>
+        <h1 class="text-2xl font-bold text-slate-900 mb-2">You're booked, {{ name }}!</h1>
+        <p class="text-slate-500 mb-6">Confirmation for {{ booked_class.name }}</p>
+
+        <div class="bg-slate-50 rounded-lg p-4 text-left mb-6">
+            <p class="text-sm text-slate-500">Instructor</p>
+            <p class="font-medium text-slate-900 mb-3">{{ booked_class.instructor }}</p>
+            <p class="text-sm text-slate-500">Time</p>
+            <p class="font-medium text-slate-900">{{ booked_class.class_time }}</p>
+        </div>
+
+        <a href="/" class="inline-block bg-slate-900 text-white rounded-lg px-6 py-2 text-sm font-medium hover:bg-slate-700 transition">
+            Back to Classes
+        </a>
+    </div>
+</body>
+</html>

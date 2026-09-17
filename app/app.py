@@ -8,7 +8,14 @@ def home():
     conn = get_connection()
     try:
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM classes ORDER BY class_time")
+        cursor.execute("""
+            SELECT c.*, 
+                   COUNT(b.id) AS booked_count
+            FROM classes c
+            LEFT JOIN bookings b ON b.class_id = c.id
+            GROUP BY c.id
+            ORDER BY c.class_time
+        """)
         classes = cursor.fetchall()
         return render_template("home.html", classes=classes)
     finally:
@@ -22,6 +29,18 @@ def book(class_id):
     conn = get_connection()
     try:
         cursor = conn.cursor()
+
+        # Check capacity before booking
+        cursor.execute("SELECT capacity FROM classes WHERE id = %s", (class_id,))
+        class_info = cursor.fetchone()
+        if not class_info:
+            return "Class not found", 404
+
+        cursor.execute("SELECT COUNT(*) AS count FROM bookings WHERE class_id = %s", (class_id,))
+        current_bookings = cursor.fetchone()["count"]
+
+        if current_bookings >= class_info["capacity"]:
+            return render_template("full.html", class_id=class_id)
 
         # Find or create the user
         cursor.execute("SELECT id FROM users WHERE email = %s", (email,))
@@ -37,7 +56,11 @@ def book(class_id):
         cursor.execute("INSERT INTO bookings (user_id, class_id) VALUES (%s, %s)", (user_id, class_id))
         conn.commit()
 
-        return redirect("/")
+        # Get class details for the confirmation page
+        cursor.execute("SELECT * FROM classes WHERE id = %s", (class_id,))
+        booked_class = cursor.fetchone()
+
+        return render_template("confirmation.html", name=name, booked_class=booked_class)
     finally:
         conn.close()
 
