@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>{% block title %}Lumina Wellness{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="{{ url_for('static', filename='tailwind.config.js') }}"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet"/>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script defer src="{{ url_for('static', filename='scripts.js') }}"></script>
+  </head>
+  <body class="bg-stone-50 text-stone-900 font-sans antialiased selection:bg-stone-200 selection:text-stone-900">
+
+    <!-- Navigation -->
+    <header>
+      <nav id="navbar" class="fixed w-full z-50 bg-stone-50/90 backdrop-blur-md border-b border-stone-200 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex justify-between items-center h-20">
+
+            <!-- Logo -->
+            <div class="flex-shrink-0 flex items-center">
+              <a class="font-serif text-3xl tracking-wider font-medium text-stone-900" href="{{ url_for('home') }}">LUMINA</a>
+            </div>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-8 items-center">
+              <a class="text-stone-600 hover:text-stone-900 transition-colors text-sm tracking-wide uppercase" href="{{ url_for('home') }}">Home</a>
+              <a class="text-stone-600 hover:text-stone-900 transition-colors text-sm tracking-wide uppercase" href="{{ url_for('booking') }}">Classes</a>
+              <a class="bg-stone-900 text-stone-50 px-6 py-2.5 rounded-sm hover:bg-stone-800 transition-colors text-sm tracking-wide uppercase" href="{{ url_for('booking') }}">Book Now</a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden flex items-center">
+              <button id="mobile-menu-btn" class="text-stone-900 hover:text-stone-600 focus:outline-none">
+                <i class="w-6 h-6" data-lucide="menu"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-stone-50 border-t border-stone-200 absolute w-full">
+          <div class="px-4 pt-2 pb-6 space-y-1">
+            <a class="block px-3 py-3 text-stone-900 text-base font-medium border-b border-stone-100" href="{{ url_for('home') }}">Home</a>
+            <a class="block px-3 py-3 text-stone-600 hover:text-stone-900 text-base font-medium border-b border-stone-100" href="{{ url_for('booking') }}">Classes</a>
+            <a class="block px-3 py-3 text-stone-600 hover:text-stone-900 text-base font-medium" href="{{ url_for('booking') }}">Book Now</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="pt-20">
+      {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-stone-900 text-stone-400 py-16 border-t border-stone-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+
+          <!-- Brand -->
+          <div>
+            <a class="font-serif text-2xl text-white tracking-wider block mb-6" href="{{ url_for('home') }}">LUMINA</a>
+            <p class="text-sm leading-relaxed mb-6">
+              A luxury sanctuary for yoga, pilates, and holistic wellness. Find your balance in the heart of the city.
+            </p>
+            <div class="flex space-x-4">
+              <a class="text-stone-400 hover:text-white transition-colors" href="#">
+                <i class="w-5 h-5" data-lucide="instagram"></i>
+              </a>
+              <a class="text-stone-400 hover:text-white transition-colors" href="#">
+                <i class="w-5 h-5" data-lucide="facebook"></i>
+              </a>
+              <a class="text-stone-400 hover:text-white transition-colors" href="#">
+                <i class="w-5 h-5" data-lucide="twitter"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Links -->
+          <div>
+            <h4 class="text-white text-sm uppercase tracking-widest mb-6">Studio</h4>
+            <ul class="space-y-4 text-sm">
+              <li><a class="hover:text-white transition-colors" href="{{ url_for('booking') }}">Classes</a></li>
+              <li><a class="hover:text-white transition-colors" href="{{ url_for('home') }}">Home</a></li>
+            </ul>
+          </div>
+
+          <!-- Visit -->
+          <div>
+            <h4 class="text-white text-sm uppercase tracking-widest mb-6">Visit</h4>
+            <p class="text-sm leading-relaxed">
+              123 Serenity Lane, Suite 400<br/>
+              Wellness District<br/>
+              New York, NY 10012
+            </p>
+          </div>
+        </div>
+        <div class="border-t border-stone-800 mt-16 pt-8 text-center text-xs tracking-wide">
+          <p>&copy; 2026 Lumina Wellness. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

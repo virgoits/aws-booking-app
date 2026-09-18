@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Book a Class - Lumina Wellness{% endblock %}
+{% block content %}
+
+<section class="py-24 bg-stone-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <span class="text-stone-500 text-sm tracking-widest uppercase block mb-2">Reserve Your Spot</span>
+      <h1 class="font-serif text-4xl md:text-5xl text-stone-900 mb-6">Upcoming Classes</h1>
+      <p class="text-stone-600 text-lg font-light">Select a class below and reserve your place in our studio.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+      {% set images = [
+        'https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?q=80&w=2069&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=2070&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=2031&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1545205597-3d9d02c29597?q=80&w=2070&auto=format&fit=crop'
+      ] %}
+      {% for c in classes %}
+      <div class="bg-white border border-stone-200 rounded-sm overflow-hidden flex flex-col">
+        <div class="h-48 overflow-hidden">
+          <img class="w-full h-full object-cover" src="{{ images[loop.index0 % images|length] }}" alt="{{ c.name }}"/>
+        </div>
+        <div class="p-8 flex flex-col flex-grow">
+          <h3 class="font-serif text-2xl italic text-stone-900 mb-2">{{ c.name }}</h3>
+          <p class="text-stone-500 text-sm mb-1">with {{ c.instructor }}</p>
+          <p class="text-stone-400 text-sm mb-4">{{ c.class_time }}</p>
+          <p class="text-xs uppercase tracking-wide text-stone-400 mb-6">{{ c.booked_count }} / {{ c.capacity }} spots booked</p>
+
+          {% if c.booked_count < c.capacity %}
+          <form action="{{ url_for('book', class_id=c.id) }}" method="POST" class="space-y-3 mt-auto">
+            <input type="text" name="name" placeholder="Your name" required
+              class="w-full bg-stone-50 border border-stone-300 px-4 py-2.5 text-sm text-stone-900 focus:outline-none focus:border-stone-500 transition-colors rounded-sm">
+            <input type="email" name="email" placeholder="Your email" required
+              class="w-full bg-stone-50 border border-stone-300 px-4 py-2.5 text-sm text-stone-900 focus:outline-none focus:border-stone-500 transition-colors rounded-sm">
+            <button type="submit"
+              class="w-full bg-stone-900 text-white px-4 py-3 text-xs uppercase tracking-widest hover:bg-stone-800 transition-colors rounded-sm">
+              Reserve Spot
+            </button>
+          </form>
+          {% else %}
+          <div class="mt-auto text-center border border-stone-300 text-stone-400 py-3 text-xs uppercase tracking-widest rounded-sm">
+            Class Full
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% else %}
+      <p class="col-span-full text-center text-stone-500">No classes are currently scheduled. Please check back soon.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

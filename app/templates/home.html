@@ -1,49 +1,138 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FitBook - Class Booking</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-50 min-h-screen">
+{% extends "base.html" %}
+{% block title %}Lumina Wellness - Yoga & Pilates Studio{% endblock %}
+{% block content %}
 
-    <nav class="bg-slate-900 text-white px-8 py-5 shadow-md">
-        <h1 class="text-2xl font-bold tracking-tight">FitBook</h1>
-        <p class="text-slate-400 text-sm">Book your next class</p>
-    </nav>
+<!-- Hero Section -->
+<section id="hero" class="relative h-screen flex items-center justify-center overflow-hidden -mt-20">
+  <div class="absolute inset-0 z-0">
+    <img class="w-full h-full object-cover" alt="Yoga Pose" src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?q=80&w=2070&auto=format&fit=crop"/>
+    <div class="absolute inset-0 bg-stone-900/30"></div>
+  </div>
+  <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+    <span class="block text-stone-100 text-sm md:text-base tracking-[0.2em] uppercase mb-4">Welcome to Lumina</span>
+    <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl text-white mb-8 leading-tight">Find Your
+      <br/>
+      <span class="italic font-light">Inner Balance</span>
+    </h1>
+    <p class="text-stone-200 text-lg md:text-xl max-w-2xl mx-auto mb-10 font-light">
+      A sanctuary for movement, mindfulness, and holistic well-being. Experience the art of yoga and pilates in our luxury studio.
+    </p>
+    <div class="flex flex-col sm:flex-row justify-center gap-4">
+      <a class="bg-white text-stone-900 px-8 py-4 rounded-sm hover:bg-stone-100 transition-colors text-sm tracking-widest uppercase font-medium min-w-[160px]" href="{{ url_for('booking') }}">Book a Class</a>
+      <a class="border border-white text-white px-8 py-4 rounded-sm hover:bg-white/10 transition-colors text-sm tracking-widest uppercase font-medium min-w-[160px]" href="#signature_classes">Explore</a>
+    </div>
+  </div>
+</section>
 
-    <main class="max-w-4xl mx-auto px-6 py-10">
-        <h2 class="text-xl font-semibold text-slate-800 mb-6">Upcoming Classes</h2>
+<!-- Elevate Your Practice -->
+<section class="py-24 bg-stone-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <h2 class="font-serif text-4xl md:text-5xl text-stone-900 mb-6">Elevate Your Practice</h2>
+      <p class="text-stone-600 text-lg font-light leading-relaxed">
+        We believe that movement is medicine. Our studio offers a curated selection of classes designed to strengthen the body, calm the mind, and uplift the spirit.
+      </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
 
-        <div class="grid gap-5">
-            {% for c in classes %}
-            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex justify-between items-center hover:shadow-md transition">
-                <div>
-                    <h3 class="text-lg font-semibold text-slate-900">{{ c.name }}</h3>
-                    <p class="text-slate-500 text-sm mt-1">with {{ c.instructor }}</p>
-                   <p class="text-slate-400 text-sm">{{ c.class_time }}</p>
-<p class="text-slate-500 text-xs mt-1">{{ c.booked_count }} / {{ c.capacity }} booked</p>
-                </div>
-
-               {% if c.booked_count < c.capacity %}
-<form action="/book/{{ c.id }}" method="POST" class="flex flex-col gap-2 w-56">
-    <input type="text" name="name" placeholder="Your name" required
-        class="border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-800">
-    <input type="email" name="email" placeholder="Your email" required
-        class="border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-800">
-    <button type="submit"
-        class="bg-slate-900 text-white rounded-lg px-4 py-2 text-sm font-medium hover:bg-slate-700 transition">
-        Book Class
-    </button>
-</form>
-{% else %}
-<span class="text-sm text-red-500 font-medium w-56 text-center">Class Full</span>
-{% endif %}
-            </div>
-            {% endfor %}
+      <div class="text-center group">
+        <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-stone-100 flex items-center justify-center group-hover:bg-stone-200 transition-colors">
+          <i class="w-8 h-8 text-stone-800" data-lucide="flower-2"></i>
         </div>
-    </main>
+        <h3 class="font-serif text-2xl text-stone-900 mb-4">Holistic Approach</h3>
+        <p class="text-stone-600 font-light">Integrating breath, movement, and mindfulness for complete well-being.</p>
+      </div>
 
-</body>
-</html>
+      <div class="text-center group">
+        <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-stone-100 flex items-center justify-center group-hover:bg-stone-200 transition-colors">
+          <i class="w-8 h-8 text-stone-800" data-lucide="users"></i>
+        </div>
+        <h3 class="font-serif text-2xl text-stone-900 mb-4">Expert Guidance</h3>
+        <p class="text-stone-600 font-light">Learn from world-class instructors dedicated to your personal growth.</p>
+      </div>
+
+      <div class="text-center group">
+        <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-stone-100 flex items-center justify-center group-hover:bg-stone-200 transition-colors">
+          <i class="w-8 h-8 text-stone-800" data-lucide="sparkles"></i>
+        </div>
+        <h3 class="font-serif text-2xl text-stone-900 mb-4">Luxury Amenities</h3>
+        <p class="text-stone-600 font-light">Immerse yourself in our spa-like facilities and premium equipment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Signature Classes Teaser -->
+<section id="signature_classes" class="py-24 bg-stone-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-end mb-12">
+      <div>
+        <span class="text-stone-500 text-sm tracking-widest uppercase block mb-2">Our Offerings</span>
+        <h2 class="font-serif text-4xl text-stone-900">Signature Classes</h2>
+      </div>
+      <a class="hidden md:flex items-center text-stone-900 hover:text-stone-600 transition-colors uppercase text-sm tracking-wide font-medium" href="{{ url_for('booking') }}">
+        Book a Class
+        <i class="w-4 h-4 ml-2" data-lucide="arrow-right"></i>
+      </a>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+      <a class="group block relative overflow-hidden h-[500px]" href="{{ url_for('booking') }}">
+        <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Vinyasa Flow" src="https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?q=80&w=2069&auto=format&fit=crop"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-stone-900/80 via-stone-900/20 to-transparent opacity-90"></div>
+        <div class="absolute bottom-0 left-0 p-8 w-full">
+          <h3 class="font-serif text-3xl text-white mb-2 italic">Vinyasa Flow</h3>
+          <p class="text-stone-200 font-light mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-4 group-hover:translate-y-0">Dynamic movement synchronized with breath.</p>
+          <span class="text-white text-sm uppercase tracking-widest border-b border-white pb-1 inline-block">Book Now</span>
+        </div>
+      </a>
+
+      <a class="group block relative overflow-hidden h-[500px]" href="{{ url_for('booking') }}">
+        <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Reformer Pilates" src="https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=2070&auto=format&fit=crop"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-stone-900/80 via-stone-900/20 to-transparent opacity-90"></div>
+        <div class="absolute bottom-0 left-0 p-8 w-full">
+          <h3 class="font-serif text-3xl text-white mb-2 italic">Reformer Pilates</h3>
+          <p class="text-stone-200 font-light mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-4 group-hover:translate-y-0">Strength, flexibility, and control.</p>
+          <span class="text-white text-sm uppercase tracking-widest border-b border-white pb-1 inline-block">Book Now</span>
+        </div>
+      </a>
+
+      <a class="group block relative overflow-hidden h-[500px]" href="{{ url_for('booking') }}">
+        <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Sound Bath" src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=2031&auto=format&fit=crop"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-stone-900/80 via-stone-900/20 to-transparent opacity-90"></div>
+        <div class="absolute bottom-0 left-0 p-8 w-full">
+          <h3 class="font-serif text-3xl text-white mb-2 italic">Sound Bath</h3>
+          <p class="text-stone-200 font-light mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-4 group-hover:translate-y-0">Deep relaxation through healing vibrations.</p>
+          <span class="text-white text-sm uppercase tracking-widest border-b border-white pb-1 inline-block">Book Now</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonial -->
+<section class="py-24 bg-stone-900 text-stone-50">
+  <div class="max-w-4xl mx-auto px-4 text-center">
+    <i class="w-12 h-12 mx-auto mb-8 text-stone-600 opacity-50" data-lucide="quote"></i>
+    <blockquote class="font-serif text-3xl md:text-4xl leading-relaxed mb-10 italic">
+      "Lumina is more than a studio; it's a sanctuary. The instructors are incredibly knowledgeable, and the space itself invites a sense of calm I haven't found anywhere else."
+    </blockquote>
+    <cite class="not-italic">
+      <span class="block text-lg font-medium">Sarah Jenkins</span>
+      <span class="block text-stone-400 text-sm uppercase tracking-widest mt-1">Member since 2023</span>
+    </cite>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-24 bg-stone-200 relative overflow-hidden">
+  <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+    <h2 class="font-serif text-5xl text-stone-900 mb-6">Begin Your Journey</h2>
+    <p class="text-stone-600 text-lg mb-10 max-w-2xl mx-auto">
+      Join our community and discover the transformative power of mindful movement. New members enjoy an exclusive introductory offer.
+    </p>
+    <a class="bg-stone-900 text-white px-10 py-4 rounded-sm hover:bg-stone-800 transition-colors text-sm tracking-widest uppercase font-medium inline-block" href="{{ url_for('booking') }}">Book Your First Class</a>
+  </div>
+</section>
+
+{% endblock %}
