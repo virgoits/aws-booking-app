@@ -9,13 +9,13 @@ def home():
     try:
         cursor = conn.cursor()
         cursor.execute("""
-            SELECT c.*, 
-                   COUNT(b.id) AS booked_count
-            FROM classes c
-            LEFT JOIN bookings b ON b.class_id = c.id
-            GROUP BY c.id
-            ORDER BY c.class_time
-        """)
+    SELECT c.id, c.name, c.instructor, c.class_time, c.capacity,
+           COUNT(b.id) AS booked_count
+    FROM classes c
+    LEFT JOIN bookings b ON b.class_id = c.id
+    GROUP BY c.id, c.name, c.instructor, c.class_time, c.capacity
+    ORDER BY c.class_time
+""")
         classes = cursor.fetchall()
         return render_template("home.html", classes=classes)
     finally:
