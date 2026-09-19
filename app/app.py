@@ -59,6 +59,21 @@ def book(class_id):
             conn.commit()
             user_id = cursor.lastrowid
 
+                    # Check for an existing booking (same user, same class)
+        cursor.execute(
+            "SELECT id FROM bookings WHERE user_id = %s AND class_id = %s",
+            (user_id, class_id)
+        )
+        existing_booking = cursor.fetchone()
+        if existing_booking:
+            cursor.execute("SELECT * FROM classes WHERE id = %s", (class_id,))
+            booked_class = cursor.fetchone()
+            return render_template("already_booked.html", name=name, booked_class=booked_class)
+
+        # Book the class
+        cursor.execute("INSERT INTO bookings (user_id, class_id) VALUES (%s, %s)", (user_id, class_id))
+        conn.commit()
+
         # Book the class
         cursor.execute("INSERT INTO bookings (user_id, class_id) VALUES (%s, %s)", (user_id, class_id))
         conn.commit()

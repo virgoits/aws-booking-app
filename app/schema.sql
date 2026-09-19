@@ -19,5 +19,6 @@ CREATE TABLE bookings (
     class_id INT NOT NULL,
     booked_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (class_id) REFERENCES classes(id)
+    FOREIGN KEY (class_id) REFERENCES classes(id),
+    UNIQUE KEY unique_user_class (user_id, class_id)
 );

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Already Booked - Lumina Wellness{% endblock %}
+{% block content %}
+
+<section class="min-h-[70vh] flex items-center justify-center py-24 bg-stone-50">
+  <div class="max-w-md w-full mx-4 bg-white border border-stone-200 rounded-sm p-12 text-center">
+    <i class="w-12 h-12 mx-auto mb-6 text-stone-400" data-lucide="info"></i>
+    <h1 class="font-serif text-3xl text-stone-900 mb-2">You're Already Booked, {{ name }}</h1>
+    <p class="text-stone-500 mb-8 font-light">You already have a reservation for {{ booked_class.name }}.</p>
+
+    <a href="{{ url_for('booking') }}" class="inline-block bg-stone-900 text-white px-8 py-3 text-xs uppercase tracking-widest hover:bg-stone-800 transition-colors rounded-sm">
+      Browse Other Classes
+    </a>
+  </div>
+</section>
+
+{% endblock %}
