@@ -3,13 +3,14 @@
   <head>
     <meta charset="UTF-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>{% block title %}Lumina Wellness{% endblock %}</title>
+    <title>{% block title %}Summerset Wellness{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="{{ url_for('static', filename='tailwind.config.js') }}"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet"/>
     <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet"/>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script defer src="{{ url_for('static', filename='scripts.js') }}"></script>
+	<link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
   </head>
   <body class="bg-stone-50 text-stone-900 font-sans antialiased selection:bg-stone-200 selection:text-stone-900">
 
@@ -21,7 +22,7 @@
 
             <!-- Logo -->
             <div class="flex-shrink-0 flex items-center">
-              <a class="font-serif text-3xl tracking-wider font-medium text-stone-900" href="{{ url_for('home') }}">LUMINA</a>
+              <a class="font-serif text-3xl tracking-wider font-medium text-stone-900" href="{{ url_for('home') }}">SUMMERSET</a>
             </div>
 
             <!-- Desktop Menu -->
@@ -62,7 +63,7 @@
 
           <!-- Brand -->
           <div>
-            <a class="font-serif text-2xl text-white tracking-wider block mb-6" href="{{ url_for('home') }}">LUMINA</a>
+            <a class="font-serif text-2xl text-white tracking-wider block mb-6" href="{{ url_for('home') }}">SUMMERSET</a>
             <p class="text-sm leading-relaxed mb-6">
               A luxury sanctuary for yoga, pilates, and holistic wellness. Find your balance in the heart of the city.
             </p>
@@ -92,14 +93,14 @@
           <div>
             <h4 class="text-white text-sm uppercase tracking-widest mb-6">Visit</h4>
             <p class="text-sm leading-relaxed">
-              123 Serenity Lane, Suite 400<br/>
+              730 S Spring St,<br/>
               Wellness District<br/>
-              New York, NY 10012
+              Los Angeles, CA 90016
             </p>
           </div>
         </div>
         <div class="border-t border-stone-800 mt-16 pt-8 text-center text-xs tracking-wide">
-          <p>&copy; 2026 Lumina Wellness. All rights reserved.</p>
+          <p>&copy; <script>document.write(new Date().getFullYear());</script> Summerset Wellness. All rights reserved.</p>
         </div>
       </div>
     </footer>
