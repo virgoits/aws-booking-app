@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from db import get_connection
+import pymysql
 
 app = Flask(__name__)
 
@@ -37,7 +38,7 @@ def book(class_id):
     try:
         cursor = conn.cursor()
 
-        # Check capacity before booking
+        # Check the class exists and isn't full
         cursor.execute("SELECT capacity FROM classes WHERE id = %s", (class_id,))
         class_info = cursor.fetchone()
         if not class_info:
@@ -59,7 +60,7 @@ def book(class_id):
             conn.commit()
             user_id = cursor.lastrowid
 
-                    # Check for an existing booking (same user, same class)
+        # Check for an existing booking (same user, same class)
         cursor.execute(
             "SELECT id FROM bookings WHERE user_id = %s AND class_id = %s",
             (user_id, class_id)
@@ -70,13 +71,14 @@ def book(class_id):
             booked_class = cursor.fetchone()
             return render_template("already_booked.html", name=name, booked_class=booked_class)
 
-        # Book the class
-        cursor.execute("INSERT INTO bookings (user_id, class_id) VALUES (%s, %s)", (user_id, class_id))
-        conn.commit()
-
-        # Book the class
-        cursor.execute("INSERT INTO bookings (user_id, class_id) VALUES (%s, %s)", (user_id, class_id))
-        conn.commit()
+        # Book the class — guarded by the DB's own UNIQUE constraint as a last resort
+        try:
+            cursor.execute("INSERT INTO bookings (user_id, class_id) VALUES (%s, %s)", (user_id, class_id))
+            conn.commit()
+        except pymysql.err.IntegrityError:
+            cursor.execute("SELECT * FROM classes WHERE id = %s", (class_id,))
+            booked_class = cursor.fetchone()
+            return render_template("already_booked.html", name=name, booked_class=booked_class)
 
         # Get class details for the confirmation page
         cursor.execute("SELECT * FROM classes WHERE id = %s", (class_id,))
