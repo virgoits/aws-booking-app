@@ -29,7 +29,7 @@
           <p class="text-xs uppercase tracking-wide text-stone-400 mb-6">{{ c.booked_count }} / {{ c.capacity }} spots booked</p>
 
           {% if c.booked_count < c.capacity %}
-          <form action="{{ url_for('book', class_id=c.id) }}" method="POST" class="space-y-3 mt-auto">
+          <form action="{{ url_for('book', class_id=c.id) }}" method="POST" class="space-y-3 mt-auto" onsubmit="this.querySelector('button').disabled=true; this.querySelector('button').innerText='Booking...';">
             <input type="text" name="name" placeholder="Your name" required
               class="w-full bg-stone-50 border border-stone-300 px-4 py-2.5 text-sm text-stone-900 focus:outline-none focus:border-stone-500 transition-colors rounded-sm">
             <input type="email" name="email" placeholder="Your email" required
